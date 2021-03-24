@@ -25,6 +25,13 @@ const CardSchema = new Schema({
   // "actions": []
 });
 
+CardSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject["_id"];
+    delete returnedObject["_id"];
+  },
+});
+
 const Card = mongoose.model('Card', CardSchema);
 
 module.exports = Card;

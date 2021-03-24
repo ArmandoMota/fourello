@@ -7,30 +7,29 @@ const { validationResult } = require("express-validator");
 const getBoard = (req, res, next) => {
   Board.findById(req.params.id)
     .populate({
-      path: 'lists',
+      path: "lists",
       populate: {
-        path: 'cards'
+        path: "cards",
       },
     })
-    .then(board => {
+    .then((board) => {
       if (board === null) {
         res.status(404).end();
       } else {
-        res.json(board);
+        res.json({ board });
       }
     })
-    .catch(err => {
-      console.log(err)
+    .catch((err) => {
+      console.log(err);
     });
 };
 
 const getBoards = (req, res, next) => {
-  Board.find({}, "title _id createdAt updatedAt")
-    .then(boards => {
-      res.json({
-        boards,
-      })
-    })
+  Board.find({}, "title _id createdAt updatedAt").then((boards) => {
+    res.json({
+      boards,
+    });
+  });
 };
 
 const createBoard = (req, res, next) => {
@@ -38,9 +37,12 @@ const createBoard = (req, res, next) => {
   if (errors.isEmpty()) {
     Board.create(req.body)
       .then((board) => {
-        Board.find({ _id: board._id }, "title _id createdAt updatedAt").then(board => res.json({ board }))
+        Board.find(
+          { _id: board._id },
+          "title _id createdAt updatedAt"
+        ).then((board) => res.json({ board }));
       })
-      .catch(err =>
+      .catch((err) =>
         next(new HttpError("Creating board failed, please try again", 500))
       );
   } else {
