@@ -1,4 +1,5 @@
 const Board = require("../models/board");
+const List = require('../models/list')
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 
@@ -26,5 +27,18 @@ const createBoard = (req, res, next) => {
   }
 };
 
+const getBoard = (req, res) => {
+  Board.findById(req.params.id).populate("lists")
+  .then(board => {
+    console.log(board)
+    console.log(req.params.id)
+    res.json({
+      board,
+    })
+  }).catch(err => console.log(err))
+}
+
+
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
+exports.getBoard = getBoard;
