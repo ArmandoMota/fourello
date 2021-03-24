@@ -3,6 +3,10 @@ export default function boards(state = [], action) {
     case "FETCH_BOARDS_SUCCESS": {
       return action.boards;
     }
+    case "FETCH_BOARD_SUCCESS": {
+      
+      return action.boards;
+    }
     case "CREATE_BOARD_SUCCESS": {
       const newBoard = action.board;
       return state.concat(newBoard);
