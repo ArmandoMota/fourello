@@ -1,21 +1,35 @@
 import React, { useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import List from "./List";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBoards } from "../../actions/BoardActions";
+import { fetchBoard } from "../../actions/BoardActions";
 
-const Board = (props) => {
-  const board = useSelector(state => state.boards.find(board => board["_id"] === props.match.params.id));
+const Board = () => {
+  const boardId = useParams().id;
+  const board = useSelector(state => state.boards.find(board => board.id === boardId));
   const dispatch = useDispatch();
-  
-  
+
   useEffect(() => {
-      dispatch(fetchBoards()) // implement             fetchBoard
-    }, [dispatch]
-  )
+    dispatch(fetchBoard(boardId))
+  }, [dispatch]);
   
-  console.log(board);
+  if (!board) { return null };
+
   return (
     <>
+      <header>
+        <ul>
+          <li id="title">{board.title}</li>
+          <li className="star-icon icon"></li>
+          <li className="private private-icon icon">Private</li>
+        </ul>
+        <div className="menu">
+          <i className="more-icon sm-icon"></i>Show Menu
+        </div>
+        <div className="subscribed">
+          <i className="sub-icon sm-icon"></i>Subscribed
+        </div>
+      </header>
       <main>
         <div id="list-container" className="list-container">
           <div id="existing-lists" className="existing-lists">

@@ -22,13 +22,20 @@ export function createBoardRequest() {
 }
 
 export function createBoardSuccess(board) {
-  return { type: types.CREATE_BOARD_SUCCESS, board: board };
+  return { type: types.CREATE_BOARD_SUCCESS, board };
 }
 
 export function fetchBoards() {
   return function(dispatch) {
     dispatch(fetchBoardsRequest());
     apiClient.getBoards(data => dispatch(fetchBoardsSuccess(data.boards)));
+  };
+}
+
+export function fetchBoard(id) {
+  return function(dispatch) {
+    dispatch(fetchBoardRequest());
+    apiClient.getBoard(id, data => dispatch(fetchBoardSuccess(data.board)));
   };
 }
 

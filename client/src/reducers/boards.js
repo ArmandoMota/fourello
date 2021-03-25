@@ -4,8 +4,9 @@ export default function boards(state = [], action) {
       return action.boards;
     }
     case "FETCH_BOARD_SUCCESS": {
-      
-      return action.boards;
+      const { lists, ...boardWithoutList } = action.board;
+      const updatedBoards = state.filter(board => board.id !== boardWithoutList.id);
+      return updatedBoards.concat(boardWithoutList);
     }
     case "CREATE_BOARD_SUCCESS": {
       const newBoard = action.board;

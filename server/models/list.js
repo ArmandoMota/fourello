@@ -35,7 +35,14 @@ const ListSchema = new Schema({
   }],
 
 
-})
+});
+
+ListSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id
+  }
+});
 
 const List = mongoose.model('List', ListSchema);
 

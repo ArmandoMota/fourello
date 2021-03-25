@@ -1,7 +1,21 @@
 export default function lists(state = [], action) {
   switch (action.type) {
     case "FETCH_BOARD_SUCCESS": {
-      return action.board.cards;
+      const [ ...updatedState ] = state;
+
+      action.board.lists.forEach(list => {
+        list.cards.forEach(card => {
+          const existingIndex = state.findIndex(existingCard => existingCard.id === card.id);
+  
+          if (existingIndex >= 0) {
+            updatedState[existingIndex] = card;
+          } else {
+            updatedState.push(card);
+          }
+        });
+      });
+      
+      return updatedState;
     }
     default:
       return state;

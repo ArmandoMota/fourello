@@ -8,14 +8,14 @@ const BoardsDashboard = (props) => {
   const boards = useSelector((state) => state.boards);
 
   const boardTiles = boards.map((board) => {
-    return <BoardTile key={board._id} title={board.title} id={board._id} />;
+    return <BoardTile key={board.id} title={board.title} id={board.id} />;
   });
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(actions.fetchBoards());
-  }, [dispatch]);
+  }, []);
 
   return (
     <main className="dashboard">

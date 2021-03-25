@@ -39,7 +39,14 @@ const CardSchema = new Schema({
     default: 0
   },
 
-})
+});
+
+CardSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id
+  }
+});
 
 const Card = mongoose.model('Card', CardSchema);
 

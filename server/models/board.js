@@ -23,8 +23,15 @@ const BoardSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "List",
   }],
-
 })
+
+BoardSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+});
 
 const Board = mongoose.model('Board', BoardSchema);
 
