@@ -2,6 +2,19 @@ import React from "react";
 const SingleBoard = () => {
   return (
     <>
+      <header>
+        <ul>
+          <li id="title">My Title</li>
+          <li className="star-icon icon"></li>
+          <li className="private private-icon icon">Private</li>
+        </ul>
+        <div className="menu">
+          <i className="more-icon sm-icon"></i>Show Menu
+        </div>
+        <div className="subscribed">
+          <i className="sub-icon sm-icon"></i>Subscribed
+        </div>
+      </header>
       <main>
         <div id="list-container" className="list-container">
           <div id="existing-lists" className="existing-lists">
@@ -177,8 +190,8 @@ const SingleBoard = () => {
                         <div className="cover-image"></div>
                         <div className="card-info">
                           <p>
-                            This is a card. Drag it onto &quot;Tried it&quot; to show it&apos;s
-                            done.
+                            This is a card. Drag it onto &quot;Tried it&quot; to
+                            show it&apos;s done.
                           </p>
                         </div>
                         <div className="card-icons"></div>
@@ -251,11 +264,17 @@ const SingleBoard = () => {
             <ul className="menu-list">
               <li className="background-item">Change Background</li>
               <li className="filter-icon menu-icon">Filter Cards</li>
-              <li className="power-icon menu-icon not-implemented">Power-Ups</li>
-              <li className="stickers-icon menu-icon not-implemented">Stickers</li>
+              <li className="power-icon menu-icon not-implemented">
+                Power-Ups
+              </li>
+              <li className="stickers-icon menu-icon not-implemented">
+                Stickers
+              </li>
               <li className="more-icon menu-icon">More</li>
               <hr />
-              <li className="activity-icon menu-icon not-implemented">Activity</li>
+              <li className="activity-icon menu-icon not-implemented">
+                Activity
+              </li>
             </ul>
             <ul className="activity-list">
               <li>

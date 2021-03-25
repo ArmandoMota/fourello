@@ -9,8 +9,8 @@ export default function cards(state = [], action) {
         existingCardIds[card.id] = index;
       });
 
-      newLists.forEach(list => {
-        list.cards.forEach(newCard => {
+      newLists.forEach((list) => {
+        list.cards.forEach((newCard) => {
           const existingIndex = existingCardIds[newCard.id];
 
           if (existingIndex) {
@@ -18,7 +18,7 @@ export default function cards(state = [], action) {
           } else {
             newState.push(newCard);
           }
-        })
+        });
       });
 
       return newState;

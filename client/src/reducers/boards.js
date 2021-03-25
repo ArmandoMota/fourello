@@ -14,10 +14,12 @@ export default function boards(state = [], action) {
       // board.createdAt = action.board.createdAt;
       // board.updatedAt = action.board.updatedAt;
 
-      const hasMatchingBoard = !!(state.find(existingBoard => board.id === existingBoard.id));
+      const hasMatchingBoard = !!state.find(
+        (existingBoard) => board.id === existingBoard.id
+      );
 
       if (hasMatchingBoard) {
-        return state.map(existingBoard => {
+        return state.map((existingBoard) => {
           return existingBoard.id === board.id ? board : existingBoard;
         });
       } else {

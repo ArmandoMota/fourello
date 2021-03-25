@@ -1,4 +1,4 @@
-const listWithoutCards = list => {
+const listWithoutCards = (list) => {
   const newList = {};
   newList.id = list.id;
   newList.title = list.title;
@@ -6,13 +6,13 @@ const listWithoutCards = list => {
   // newList.createdAt = list.createdAt;
   // newList.updatedAt = list.updatedAt;
   // newList.position = list.position;
-  
+
   return newList;
 };
 
 export default function lists(state = [], action) {
   switch (action.type) {
-    case "FETCH_BOARD_SUCCESS": {      
+    case "FETCH_BOARD_SUCCESS": {
       const newLists = action.board.lists;
       const existingIds = {};
       const newState = [...state];
@@ -21,7 +21,7 @@ export default function lists(state = [], action) {
         existingIds[list.id] = index;
       });
 
-      newLists.forEach(list => {
+      newLists.forEach((list) => {
         const existingIndex = existingIds[list.id];
 
         if (existingIndex) {
