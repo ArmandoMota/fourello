@@ -9,8 +9,7 @@ const CardSchema = new Schema({
   },
 
   dueDate: {
-    type: String,
-    default: null,
+    type: Date,
   },
 
   labels: [
@@ -25,12 +24,12 @@ const CardSchema = new Schema({
   },
 
   listId: {
-    type: Number,
+    type: String,
     required: [true, 'The List ID is required'],
   },
 
   boardId: {
-    type: Number,
+    type: String,
     required: [true, 'The Board ID is required'],
   },
 

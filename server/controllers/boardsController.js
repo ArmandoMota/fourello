@@ -37,8 +37,6 @@ const getBoard = (req, res) => {
       }
     })
     .then(board => {
-      console.log(board)
-      console.log(req.params.id)
       res.json({ board })
     }).catch(err => console.log(err))
 }

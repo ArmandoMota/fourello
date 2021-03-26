@@ -13,7 +13,7 @@ export default function lists(state = [], action) {
           updatedState.push(listWithoutCards);
         }
       });
-
+      
       return updatedState;
     }
     default:

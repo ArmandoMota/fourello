@@ -7,8 +7,9 @@ import { fetchBoard } from "../../actions/BoardActions";
 const Board = () => {
   const boardId = useParams().id;
   const board = useSelector(state => state.boards.find(board => board.id === boardId));
+  const lists = useSelector(state => state.lists.filter(list => list.boardId === boardId ));
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     dispatch(fetchBoard(boardId))
   }, [dispatch]);
@@ -33,8 +34,9 @@ const Board = () => {
       <main>
         <div id="list-container" className="list-container">
           <div id="existing-lists" className="existing-lists">
-              <div id="cards-container" data-id="list-1-cards"></div>
-              <div className="add-dropdown add-bottom"></div>
+           {lists.map(list => {
+             return <List list={list} key={list.id} />;
+           })}
           </div>
           <div id="new-list" className="new-list">
             <span>Add a list...</span>

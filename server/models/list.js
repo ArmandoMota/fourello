@@ -10,7 +10,7 @@ const ListSchema = new Schema({
   },
 
   boardId: {
-    type: Number,
+    type: String,
     required: [true, 'The List board ID is required']
   },
 
