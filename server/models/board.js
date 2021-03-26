@@ -1,22 +1,20 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const BoardSchema = new Schema({
   title: {
     type: String,
-    required: [true, 'The Board title is required']
+    required: [true, "The Board title is required"],
   },
   lists: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'List' 
-    }
+      ref: "List",
+    },
   ],
-  // createdAt: { type: Date, default: Date.now },
-  // updatedAt: { type: Date, default: Date.now },
 });
 
-BoardSchema.set('toJSON', {
+BoardSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject["_id"];
     delete returnedObject["_id"];
@@ -24,6 +22,6 @@ BoardSchema.set('toJSON', {
   },
 });
 
-const Board = mongoose.model('Board', BoardSchema);
+const Board = mongoose.model("Board", BoardSchema);
 
 module.exports = Board;

@@ -1,33 +1,36 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ListSchema = new Schema({
   title: {
     type: String,
-    required: [true, 'The List title is required']
+    required: [true, "The List title is required"],
   },
   boardId: {
     type: String,
-    required: [true, 'The list\'s Board Id is required']
+    required: [true, "The list's Board Id is required"],
   },
-  // createdAt: { type: Date, default: Date.now },
-  // updatedAt: { type: Date, default: Date.now },
-  // position needs to be added
+
+  position: {
+    type: mongoose.Types.Decimal128,
+    default: 0.0,
+  },
+
   cards: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Card' 
-    }
+      ref: "Card",
+    },
   ],
 });
 
-ListSchema.set('toJSON', {
+ListSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject["_id"];
     delete returnedObject["_id"];
   },
 });
 
-const List = mongoose.model('List', ListSchema);
+const List = mongoose.model("List", ListSchema);
 
 module.exports = List;
