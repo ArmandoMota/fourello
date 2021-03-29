@@ -8,7 +8,6 @@ import ExistingList from "./ExistingLists";
 
 const Board = () => {
   const boardId = useParams().id;
-  console.log(boardId);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,20 +19,11 @@ const Board = () => {
   );
 
   const lists = useSelector((state) => {
-    console.log(state);
     return state.lists.filter((list) => list.boardId === boardId);
   });
 
   // Filter for specific boardId
   const cards = useSelector((state) => state.cards);
-
-  if (board) {
-    console.log(board);
-    console.log(lists);
-    console.log(cards);
-  } else {
-    console.log("No board found!");
-  }
 
   if (!board) {
     return null;
@@ -58,7 +48,7 @@ const Board = () => {
         <div id="list-container" className="list-container">
           <ExistingList boardId={boardId} />
 
-          <NewList />
+          <NewList boardId={boardId} />
         </div>
       </main>
     </>

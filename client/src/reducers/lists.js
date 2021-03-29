@@ -14,24 +14,10 @@ export default function lists(state = [], action) {
   switch (action.type) {
     case "FETCH_BOARD_SUCCESS": {
       const newLists = action.board.lists;
-      const existingIds = {};
-      const newState = [...state];
 
-      newState.forEach((list, index) => {
-        existingIds[list.id] = index;
-      });
+      let newState = state.filter((list) => list.boardId !== action.board.id);
 
-      newLists.forEach((list) => {
-        const existingIndex = existingIds[list.id];
-
-        if (existingIndex) {
-          newState[existingIndex] = listWithoutCards(list);
-        } else {
-          newState.push(listWithoutCards(list));
-        }
-      });
-
-      return newState;
+      return [...newState, ...newLists];
     }
     default:
       return state;
