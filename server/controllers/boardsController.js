@@ -53,26 +53,39 @@ const createBoard = (req, res, next) => {
   }
 };
 
+const findBoardLists = (req, res, next) => {
+  Board.findById(req.list.boardId).then((board) => {
+    const lists = [...board.lists, req.list._id];
+    req.lists = lists;
+    next();
+  });
+};
+
+const updateBoardLists = (req, res, next) => {
+  Board.findByIdAndUpdate(
+    req.list.boardId,
+    { lists: req.lists },
+    { new: true }
+  ).then((updatedBoard) => {
+    next();
+  });
+};
+
+const getList = (req, res, next) => {
+  List.find(
+    { _id: req.list._id },
+    "title _id boardId createdAt updatedAt position"
+  ).then((list) => res.json({ list }));
+};
+
 const createList = (req, res, next) => {
   const errors = validationResult(req);
 
   if (errors.isEmpty()) {
     List.create(req.body)
       .then((list) => {
-        Board.findById(list.boardId).then((board) => {
-          const lists = [...board.lists, list._id];
-
-          Board.findByIdAndUpdate(list.boardId, { lists }, { new: true }).then(
-            (updatedBoard) => {
-              console.log(updatedBoard);
-            }
-          );
-        });
-
-        List.find(
-          { _id: list._id },
-          "title _id boardId createdAt updatedAt position"
-        ).then((list) => res.json({ list }));
+        req.list = list;
+        next();
       })
       .catch((err) =>
         next(new HttpError("Creating list failed, please try again", 500))
@@ -86,3 +99,6 @@ exports.getBoards = getBoards;
 exports.createBoard = createBoard;
 exports.getBoard = getBoard;
 exports.createList = createList;
+exports.findBoardLists = findBoardLists;
+exports.updateBoardLists = updateBoardLists;
+exports.getList = getList;
