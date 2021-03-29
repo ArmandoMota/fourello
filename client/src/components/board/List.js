@@ -23,7 +23,7 @@ const List = ({ list }) => {
               <span>...</span>
             </div>
           </div>
-          <div id="cards-container" data-id="list-1-cards">
+          <div id="cards-container" data-id={`list-${list.id}-cards`}>
             {cards.map((card) => (
               <Card key={card.id} card={card} />
             ))}

@@ -4,7 +4,6 @@ import List from "./List";
 
 const ExistingLists = ({ boardId }) => {
   const lists = useSelector((state) => {
-    console.log(state);
     return state.lists.filter((list) => list.boardId === boardId);
   });
 
