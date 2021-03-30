@@ -1,8 +1,27 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Card from "./Card";
+import { updateList } from "../../actions/BoardActions";
 
 const List = ({ list }) => {
+  const [ editing, setEditing ] = useState(false);
+  const [ title, setTitle ] = useState(list.title);
+  const dispatch = useDispatch();
+  
+  const editTitle = event => {
+    setEditing(true);
+  };
+  
+  const saveTitle = event => {
+    if (event.key === "Enter" || event.key === undefined) {
+      setEditing(false);
+      dispatch(updateList({
+        id: list.id,
+        data: { title }
+      }));
+    }
+  };
+  
   const cards = useSelector((state) => {
     return state.cards.filter((card) => card.listId === list.id);
   });
@@ -13,7 +32,20 @@ const List = ({ list }) => {
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
           <div>
-            <p className="list-title">{list.title}</p>
+            { editing ? 
+              <input
+                className="list-title"
+                value={title}
+                type="text"
+                autoFocus
+                onBlur={saveTitle}
+                onKeyPress={saveTitle}
+                onChange={event => { setTitle(event.target.value) }}
+              /> :
+              <p
+                className="list-title"
+                onClick={editTitle}>{title}
+              </p> }
           </div>
           <div className="add-dropdown add-top">
             <div className="card"></div>

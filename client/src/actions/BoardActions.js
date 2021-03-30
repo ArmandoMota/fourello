@@ -25,6 +25,14 @@ export function createBoardSuccess(board) {
   return { type: types.CREATE_BOARD_SUCCESS, board };
 }
 
+export function updateListRequest() {
+  return { type: types.UPDATE_LIST_REQUEST };
+}
+
+export function updateListSuccess(list) {
+  return { type: types.UPDATE_LIST_SUCCESS, list };
+}
+
 export function fetchBoards() {
   return function (dispatch) {
     dispatch(fetchBoardsRequest());
@@ -50,6 +58,15 @@ export function fetchBoard(boardId) {
     dispatch(fetchBoardRequest());
     apiClient.getBoard(boardId, (data) => {
       dispatch(fetchBoardSuccess(data.board));
+    });
+  };
+}
+
+export function updateList(newList) {
+  return function (dispatch) {
+    dispatch(updateListRequest());
+    apiClient.updateList(newList, (data) => {
+      dispatch(updateListSuccess(data));
     });
   };
 }

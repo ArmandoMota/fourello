@@ -95,6 +95,15 @@ const createList = (req, res, next) => {
   }
 };
 
+const updateList = (req, res, next) => {
+  const id = req.params.id;
+  List.findByIdAndUpdate(
+    id,
+    req.body,
+    { new: true }
+  ).then((list) => res.json(list));
+};
+
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
 exports.getBoard = getBoard;
@@ -102,3 +111,4 @@ exports.createList = createList;
 exports.findBoardLists = findBoardLists;
 exports.updateBoardLists = updateBoardLists;
 exports.getList = getList;
+exports.updateList = updateList;

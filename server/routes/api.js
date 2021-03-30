@@ -16,4 +16,14 @@ router.post(
   boardsController.getList
 );
 
+router.put(
+  "/lists/:id",
+  boardsController.updateList
+);
+
+router.patch(
+  "/lists/:id",
+  boardsController.updateList
+);
+
 module.exports = router;
