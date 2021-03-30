@@ -1,20 +1,30 @@
 import React, { useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import List from "./List";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBoard } from "../../actions/BoardActions";
 
 const Board = () => {
   const boardId = useParams().id;
-  const board = useSelector(state => state.boards.find(board => board.id === boardId));
-  const lists = useSelector(state => state.lists.filter(list => list.boardId === boardId ));
+  const board = useSelector((state) =>
+    state.boards.find((board) => board.id === boardId)
+  );
+  const lists = useSelector((state) =>
+    state.lists.filter((list) => list.boardId === boardId)
+  );
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
-    dispatch(fetchBoard(boardId))
+    dispatch(fetchBoard(boardId));
   }, [dispatch]);
-  
-  if (!board) { return null };
+
+  if (!board) {
+    return null;
+  }
+
+  const handleClick = (e) => {
+    e.target.classList.add("selected");
+  };
 
   return (
     <>
@@ -34,11 +44,11 @@ const Board = () => {
       <main>
         <div id="list-container" className="list-container">
           <div id="existing-lists" className="existing-lists">
-           {lists.map(list => {
-             return <List list={list} key={list.id} />;
-           })}
+            {lists.map((list) => {
+              return <List list={list} key={list.id} />;
+            })}
           </div>
-          <div id="new-list" className="new-list">
+          <div id="new-list" className="new-list" onClick={handleClick}>
             <span>Add a list...</span>
             <input type="text" placeholder="Add a list..." />
             <div>
@@ -72,11 +82,17 @@ const Board = () => {
             <ul className="menu-list">
               <li className="background-item">Change Background</li>
               <li className="filter-icon menu-icon">Filter Cards</li>
-              <li className="power-icon menu-icon not-implemented">Power-Ups</li>
-              <li className="stickers-icon menu-icon not-implemented">Stickers</li>
+              <li className="power-icon menu-icon not-implemented">
+                Power-Ups
+              </li>
+              <li className="stickers-icon menu-icon not-implemented">
+                Stickers
+              </li>
               <li className="more-icon menu-icon">More</li>
               <hr />
-              <li className="activity-icon menu-icon not-implemented">Activity</li>
+              <li className="activity-icon menu-icon not-implemented">
+                Activity
+              </li>
             </ul>
             <ul className="activity-list">
               <li>

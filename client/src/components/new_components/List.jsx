@@ -3,12 +3,12 @@ import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 
 const List = ({ list }) => {
-  const {
-    title,
-  } = list;
-  
-  const cards = useSelector(state => state.cards.filter(card => card.listId === list.id ));
-  
+  const { title } = list;
+
+  const cards = useSelector((state) =>
+    state.cards.filter((card) => card.listId === list.id)
+  );
+
   return (
     <div className="list-wrapper">
       <div className="list-background">
@@ -26,7 +26,7 @@ const List = ({ list }) => {
             </div>
           </div>
           <div id="cards-container" data-id="list-1-cards">
-            {cards.map(card => {
+            {cards.map((card) => {
               return <Card card={card} key={card.id} />;
             })}
           </div>
