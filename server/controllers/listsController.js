@@ -6,8 +6,7 @@ const { validationResult } = require("express-validator");
 const createList = (req, res, next) => {
   const errors = validationResult(req);
   const { boardId, list } = req.body;
-  console.log(errors);
-  console.log(boardId, list);
+
   if (errors.isEmpty()) {
     const newList = {
       title: list.title,
@@ -23,7 +22,6 @@ const createList = (req, res, next) => {
         next(new HttpError("Creating list failed, please try again", 500))
       );
   } else {
-    console.log(errors);
     return next(new HttpError("The list input field is empty.", 404));
   }
 };
@@ -46,7 +44,6 @@ const sendList = (req, res, next) => {
 
 const updateList = (req, res, next) => {
   const listId = req.params.id;
-  console.log(listId);
   const options = {};
   if (req.body.title) {
     options["title"] = req.body.title;
@@ -56,10 +53,8 @@ const updateList = (req, res, next) => {
     options["position"] = req.body.position;
   }
 
-  console.log(options);
-
-  List.findByIdAndUpdate(listId, options, { new: true }).then((newList) =>
-    res.json(newList)
+  List.findByIdAndUpdate(listId, options, { new: true }).then((list) =>
+    res.json({ list })
   );
 };
 

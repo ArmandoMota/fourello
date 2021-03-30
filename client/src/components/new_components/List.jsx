@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
+import { updateList } from "../../actions/ListActions";
 
 const List = ({ list }) => {
-  const { title } = list;
-
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [titleText, setTitleText] = useState(list.title);
   const cards = useSelector((state) =>
     state.cards.filter((card) => card.listId === list.id)
   );
+  const dispatch = useDispatch();
+
+  const handleStartEditTitle = (e) => {
+    setEditingTitle(!editingTitle);
+  };
+
+  const handleSaveNewTitle = (e) => {
+    const updates = { title: titleText };
+    setEditingTitle(!editingTitle);
+    dispatch(updateList(list.id, updates));
+  }
 
   return (
     <div className="list-wrapper">
@@ -15,7 +27,16 @@ const List = ({ list }) => {
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
           <div>
-            <p className="list-title">{title}</p>
+            {editingTitle ?
+              <input
+                type="text"
+                className="list-title"
+                autoFocus={true}
+                value={titleText}
+                onBlur={handleSaveNewTitle}
+                onChange={(e) => setTitleText(e.target.value)}/> :
+              <p className="list-title" onClick={handleStartEditTitle}>{titleText}</p>
+            }
           </div>
           <div className="add-dropdown add-top">
             <div className="card"></div>

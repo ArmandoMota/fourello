@@ -40,13 +40,10 @@ ListSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
+    delete returnedObject.__v;
   },
 });
 
 const List = mongoose.model("List", ListSchema);
 
 module.exports = List;
-
-/*
-module.exports = ListSchema;
-*/

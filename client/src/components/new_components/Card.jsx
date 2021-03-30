@@ -16,9 +16,7 @@ const Card = ({ card }) => {
     
     return `${month} ${day}`;
   }
-  
-  console.log(dueDate);
-  console.log(typeof dueDate);
+
   let hasDescription = "";
 
   if (description) {
