@@ -47,7 +47,7 @@ const addCardToList = async (req, res, next) => {
 
 const sendCard = (req, res, next) => {
   const card = req.card;
-  res.json(card);
+  res.json({ card });
 };
 
 exports.getCard = getCard;

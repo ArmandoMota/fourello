@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import List from "./List";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,10 +8,11 @@ import Axios from "axios";
 
 const Board = () => {
   const boardId = useParams().id;
+  const [selectedListId, setSelectedListId] = useState("");
   const board = useSelector((state) =>
     state.boards.find((board) => board.id === boardId)
   );
-  const lists = useSelector((state) => 
+  const lists = useSelector((state) =>
     state.lists.filter((list) => list.boardId === boardId)
   );
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const Board = () => {
       e.currentTarget.classList.add("selected");
     } else if (e.target.value === "Save") {
       e.currentTarget.classList.remove("selected");
-      const newListName = e.currentTarget.querySelector("[type=\"text\"]").value;
+      const newListName = e.currentTarget.querySelector('[type="text"]').value;
       const listData = {
         boardId,
         list: { title: newListName },
@@ -38,9 +39,9 @@ const Board = () => {
       dispatch(createList(listData));
     } else if (e.target.nodeName === "I") {
       e.currentTarget.classList.remove("selected");
-      e.currentTarget.querySelector("[type=\"text\"]").value = "";
+      e.currentTarget.querySelector('[type="text"]').value = "";
     }
-    
+
     // console.log();
     // console.log(e.target.type);
     // console.log(e.target.element);
@@ -48,9 +49,7 @@ const Board = () => {
     // console.log(e.currentTarget);
   };
 
-  const handleSubmitList = (e) => {
-
-  };
+  const handleSubmitList = (e) => {};
 
   return (
     <>
@@ -71,7 +70,14 @@ const Board = () => {
         <div id="list-container" className="list-container">
           <div id="existing-lists" className="existing-lists">
             {lists.map((list) => {
-              return <List list={list} key={list.id} />;
+              return (
+                <List
+                  list={list}
+                  key={list.id}
+                  selectedListId={selectedListId}
+                  setSelectedListId={setSelectedListId}
+                />
+              );
             })}
           </div>
           <div id="new-list" className="new-list" onClick={handleClick}>

@@ -19,37 +19,44 @@ axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 axios.defaults.headers.common["Accept"] = "application/json";
 
 const apiClient = {
-  getBoards: function(callback) {
+  getBoards: function (callback) {
     return axios
       .get(routes.BOARDS_INDEX_URL)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
-  getBoard: function(id, callback) {
+  getBoard: function (id, callback) {
     return axios
       .get(`${routes.FETCH_BOARD_URL}/${id}`)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
-  createBoard: function(board, callback) {
+  createBoard: function (board, callback) {
     return axios
       .post(routes.CREATE_BOARD_URL, board)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
-  createList: function(list, callback) {
+  createList: function (list, callback) {
     return axios
       .post(routes.CREATE_LIST_URL, list)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
-  updateList: function(id, updates, callback) {
+  updateList: function (id, updates, callback) {
     return axios
       .put(`${routes.UPDATE_LIST_URL}/${id}`, updates)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
+  createCard: function (card, callback) {
+    return axios
+      .post(routes.CREATE_CARD_URL, card)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
