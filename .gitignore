@@ -2,6 +2,7 @@ node_modules/
 build
 npm-debug.log
 server/.env
+.env
 .DS_Store
 client/package-lock.json
 client/yarn.lock
