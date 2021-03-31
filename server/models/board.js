@@ -1,6 +1,4 @@
-const List = require("./list");
 const mongoose = require("mongoose");
-const { schema } = require("./card");
 const Schema = mongoose.Schema;
 
 const BoardSchema = new Schema({

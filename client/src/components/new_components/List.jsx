@@ -19,7 +19,13 @@ const List = ({ list }) => {
     const updates = { title: titleText };
     setEditingTitle(!editingTitle);
     dispatch(updateList(list.id, updates));
-  }
+  };
+
+  const handleKeypress = (e) => {
+    if (e.key === "Enter") {
+      handleSaveNewTitle();
+    }
+  };
 
   return (
     <div className="list-wrapper">
@@ -27,16 +33,21 @@ const List = ({ list }) => {
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
           <div>
-            {editingTitle ?
+            {editingTitle ? (
               <input
                 type="text"
                 className="list-title"
-                autoFocus={true}
+                autoFocus
                 value={titleText}
                 onBlur={handleSaveNewTitle}
-                onChange={(e) => setTitleText(e.target.value)}/> :
-              <p className="list-title" onClick={handleStartEditTitle}>{titleText}</p>
-            }
+                onKeyPress={handleKeypress}
+                onChange={(e) => setTitleText(e.target.value)}
+              />
+            ) : (
+              <p className="list-title" onClick={handleStartEditTitle}>
+                {titleText}
+              </p>
+            )}
           </div>
           <div className="add-dropdown add-top">
             <div className="card"></div>
