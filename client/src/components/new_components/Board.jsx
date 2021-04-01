@@ -7,18 +7,22 @@ import { createList } from "../../actions/ListActions";
 import Axios from "axios";
 
 const Board = () => {
+  const dispatch = useDispatch();
+  const cards = useSelector(({ cards }) => cards);
   const [selectedListId, setSelectedListId] = useState("");
   let id = useParams().id;
   let boardId;
-  const { url } = useRouteMatch();
-  const cards = useSelector(({ cards }) => cards);
 
+  useEffect(() => {
+    if (boardId) {
+      dispatch(fetchBoard(boardId));
+    }
+  }, [boardId, dispatch]);
+
+  const { url } = useRouteMatch();
   if (url.includes("cards")) {
-    cards.forEach(card => {
-      if (card.id === id) {
-        boardId = card.boardId;
-      }
-    });
+    const card = cards.find((card) => card.id === id);
+    boardId = card.boardId;
   } else {
     boardId = id;
   }
@@ -29,14 +33,6 @@ const Board = () => {
   const lists = useSelector((state) =>
     state.lists.filter((list) => list.boardId === boardId)
   );
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (boardId) {
-      dispatch(fetchBoard(boardId));
-    }
-    
-  }, [boardId, dispatch]);
 
   const handleClick = (e) => {
     if (e.target.textContent === "Add a list...") {

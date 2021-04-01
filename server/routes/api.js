@@ -5,12 +5,11 @@ const listsController = require("../controllers/listsController");
 const cardsController = require("../controllers/cardsController");
 const { validateBoard, validateList } = require("../validators/validators");
 
+router.get("/boards", boardsController.getBoards);
+router.post("/boards", validateBoard, boardsController.createBoard);
 router.get("/boards/:id", boardsController.getBoard);
 
-router.get("/boards", boardsController.getBoards);
-
-router.post("/boards", validateBoard, boardsController.createBoard);
-
+router.put("/lists/:id", listsController.updateList);
 router.post(
   "/lists",
   validateList,
@@ -19,10 +18,7 @@ router.post(
   listsController.sendList
 );
 
-router.put("/lists/:id", listsController.updateList);
-
 router.get("/cards/:id", cardsController.getCard);
-
 router.post(
   "/cards",
   cardsController.createCard,
