@@ -27,4 +27,9 @@ router.post(
   boardsController.getCard
 );
 
+router.get(
+  "/cards/:id",
+  boardsController.getCard
+);
+
 module.exports = router;

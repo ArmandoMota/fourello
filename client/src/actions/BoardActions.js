@@ -79,6 +79,14 @@ export function createCardSuccess(card) {
   return { type: types.CREATE_CARD_SUCCESS, card };
 }
 
+export function fetchCardRequest() {
+  return { type: types.FETCH_CARD_REQUEST };
+}
+
+export function fetchCardSuccess() {
+  return { type: types.FETCH_CARD_SUCCESS };
+}
+
 export function createCard(card, callback) {
   return function (dispatch) {
     dispatch(createCardRequest());
@@ -88,6 +96,15 @@ export function createCard(card, callback) {
       if (callback) {
         callback(data.card);
       }
+    });
+  };
+}
+
+export function fetchCard(cardId) {
+  return function (dispatch) {
+    dispatch(fetchCardRequest());
+    apiClient.getCard(cardId, (data) => {
+      dispatch(fetchCardSuccess(data.card));
     });
   };
 }

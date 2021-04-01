@@ -138,8 +138,8 @@ const updateListCards = (req, res, next) => {
 };
 
 const getCard = (req, res, next) => {
-  Card.find(
-    { _id: req.card._id },
+  Card.findById(
+    { _id: req.params.id },
     "title _id listId createdAt updatedAt position boardId description" +
       " dueDate completed comments actions archived commentsCount"
   ).then((card) => res.json({ card }));
