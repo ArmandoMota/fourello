@@ -20,7 +20,7 @@ export default function lists(state = [], action) {
       return [...newState, ...newLists];
     }
     case "UPDATE_LIST_SUCCESS": {
-      return state.map(list => {
+      return state.map((list) => {
         if (list.id === action.list._id) {
           const { title, position } = action.list;
           return { ...list, title, position }; // Not sure this works
@@ -28,7 +28,6 @@ export default function lists(state = [], action) {
           return list;
         }
       });
-      
     }
     default:
       return state;

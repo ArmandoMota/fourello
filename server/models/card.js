@@ -8,33 +8,46 @@ const CardSchema = new Schema(
       required: [true, "The Card title is required"],
     },
     dueDate: Date,
+
     labels: [
       {
         type: String,
       },
     ],
+
     description: String,
+
     listId: {
       type: String,
       required: [true, "The card's List Id is required"],
     },
     boardId: {
       type: String,
-      required: [true, "The card's board Id is required"],
     },
+
+    archived: {
+      type: Boolean,
+      default: false,
+    },
+
+    completed: {
+      type: Boolean,
+      default: false,
+    },
+
     position: {
       type: mongoose.Types.Decimal128,
       default: 0.0,
     },
 
-    boardId: {
-      type: String,
-      required: [true, "The list's Board Id is required"],
+    comments: {
+      type: Array,
+      default: [],
     },
 
-    listId: {
-      type: String,
-      required: [true, "The card's List Id is required"],
+    actions: {
+      type: Array,
+      default: [],
     },
   },
   { timestamps: true }

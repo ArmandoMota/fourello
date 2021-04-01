@@ -97,11 +97,52 @@ const createList = (req, res, next) => {
 
 const updateList = (req, res, next) => {
   const id = req.params.id;
+  List.findByIdAndUpdate(id, req.body, { new: true }).then((list) =>
+    res.json(list)
+  );
+};
+
+const createCard = (req, res, next) => {
+  const errors = validationResult(req);
+  if (errors.isEmpty()) {
+    Card.create(req.body)
+      .then((card) => {
+        req.card = card;
+        next();
+      })
+      .catch((err) => {
+        next(new HttpError("Creating card failed, please try again", 500));
+      });
+  } else {
+    return next(new HttpError("The input field is empty.", 404));
+  }
+};
+
+const findListCards = (req, res, next) => {
+  List.findById(req.card.listId).then((list) => {
+    req.card.boardId = list.boardId;
+    const cards = [...list.cards, req.card._id, req.card.boardId];
+    req.cards = cards;
+    next();
+  });
+};
+
+const updateListCards = (req, res, next) => {
   List.findByIdAndUpdate(
-    id,
-    req.body,
+    req.card.listId,
+    { cards: req.cards },
     { new: true }
-  ).then((list) => res.json(list));
+  ).then((updatedList) => {
+    next();
+  });
+};
+
+const getCard = (req, res, next) => {
+  Card.find(
+    { _id: req.card._id },
+    "title _id listId createdAt updatedAt position boardId description" +
+      " dueDate completed comments actions archived commentsCount"
+  ).then((card) => res.json({ card }));
 };
 
 exports.getBoards = getBoards;
@@ -112,3 +153,7 @@ exports.findBoardLists = findBoardLists;
 exports.updateBoardLists = updateBoardLists;
 exports.getList = getList;
 exports.updateList = updateList;
+exports.createCard = createCard;
+exports.findListCards = findListCards;
+exports.updateListCards = updateListCards;
+exports.getCard = getCard;

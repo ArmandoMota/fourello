@@ -16,14 +16,15 @@ router.post(
   boardsController.getList
 );
 
-router.put(
-  "/lists/:id",
-  boardsController.updateList
-);
+router.put("/lists/:id", boardsController.updateList);
+router.patch("/lists/:id", boardsController.updateList);
 
-router.patch(
-  "/lists/:id",
-  boardsController.updateList
+router.post(
+  "/cards",
+  boardsController.createCard,
+  boardsController.findListCards,
+  boardsController.updateListCards,
+  boardsController.getCard
 );
 
 module.exports = router;
