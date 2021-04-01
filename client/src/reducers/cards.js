@@ -22,6 +22,10 @@ export default function lists(state = [], action) {
       return updatedState;
     case types.CREATE_CARD_SUCCESS:
       return [...state, action.card];
+    case types.FETCH_CARD_SUCCESS:
+      const filteredCards = state.filter(card => card.id !== action.card.id);
+      filteredCards.push(action.card);
+      return filteredCards;
     default:
       return state;
   }

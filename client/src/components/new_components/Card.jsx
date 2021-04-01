@@ -1,7 +1,10 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const Card = ({ card }) => {
+  let history = useHistory();
+
   const {
     title,
     description,
@@ -17,6 +20,10 @@ const Card = ({ card }) => {
     return `${month} ${day}`;
   }
 
+  const handleShowCard = (e) => {
+    history.push(`/cards/${card.id}`);
+  }
+
   let hasDescription = "";
 
   if (description) {
@@ -25,7 +32,7 @@ const Card = ({ card }) => {
 
   return (
     <div className="card-background">
-      <div className="card ">
+      <div className="card " onClick={handleShowCard}>
         <i className="edit-toggle edit-icon sm-icon"></i>
         <div className="card-info">
           {labels.map(label => {

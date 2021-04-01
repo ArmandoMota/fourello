@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useRouteMatch } from "react-router-dom";
 import List from "./List";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBoard } from "../../actions/BoardActions";
@@ -7,8 +7,22 @@ import { createList } from "../../actions/ListActions";
 import Axios from "axios";
 
 const Board = () => {
-  const boardId = useParams().id;
   const [selectedListId, setSelectedListId] = useState("");
+  let id = useParams().id;
+  let boardId;
+  const { url } = useRouteMatch();
+  const cards = useSelector(({ cards }) => cards);
+
+  if (url.includes("cards")) {
+    cards.forEach(card => {
+      if (card.id === id) {
+        boardId = card.boardId;
+      }
+    });
+  } else {
+    boardId = id;
+  }
+
   const board = useSelector((state) =>
     state.boards.find((board) => board.id === boardId)
   );
@@ -18,12 +32,11 @@ const Board = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchBoard(boardId));
-  }, [dispatch]);
-
-  if (!board) {
-    return null;
-  }
+    if (boardId) {
+      dispatch(fetchBoard(boardId));
+    }
+    
+  }, [boardId, dispatch]);
 
   const handleClick = (e) => {
     if (e.target.textContent === "Add a list...") {
@@ -41,15 +54,11 @@ const Board = () => {
       e.currentTarget.classList.remove("selected");
       e.currentTarget.querySelector('[type="text"]').value = "";
     }
-
-    // console.log();
-    // console.log(e.target.type);
-    // console.log(e.target.element);
-    // console.log(e.target);
-    // console.log(e.currentTarget);
   };
 
-  const handleSubmitList = (e) => {};
+  if (!board) {
+    return null;
+  }
 
   return (
     <>

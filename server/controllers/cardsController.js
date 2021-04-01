@@ -7,7 +7,7 @@ const getCard = (req, res, next) => {
 
   Card.findById(cardId)
     .then((card) => {
-      res.json(card);
+      res.json({ card });
     })
     .catch((err) => next(new HttpError("Card not found", 404)));
 };

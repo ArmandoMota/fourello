@@ -21,3 +21,24 @@ export function createCard(card, callback) {
     });
   };
 }
+
+export function getCardRequest() {
+  return { type: types.FETCH_CARD_REQUEST };
+}
+
+export function getCardSuccess(card) {
+  return { type: types.FETCH_CARD_SUCCESS, card };
+}
+
+export function getCard(id, callback) {
+  return function (dispatch) {
+    dispatch(getCardRequest());
+    apiClient.getCard(id, (data) => {
+      dispatch(getCardSuccess(data.card));
+
+      if (callback) {
+        callback(data.card);
+      }
+    });
+  };
+}
