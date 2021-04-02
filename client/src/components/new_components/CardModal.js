@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCard } from "../../actions/CardActions";
+import { getCard, updateCard } from "../../actions/CardActions";
+import Comment from "./Comment";
 
 const CardModal = () => {
+  const [cardTitle, setCardTitle] = useState("");
   let cardId = useParams().id;
   let card = useSelector(({ cards }) =>
     cards.find((card) => card.id === cardId)
@@ -15,8 +17,18 @@ const CardModal = () => {
     dispatch(getCard(cardId));
   }, [dispatch, cardId]);
 
+  useEffect(() => {
+    if (card) {
+      setCardTitle(card.title);
+    }
+  }, [card]);
+
   const handleHideCard = () => {
     history.push(`/boards/${card.boardId}`);
+  };
+
+  const handleUpdateTitle = () => {
+    dispatch(updateCard(card.id, { title: cardTitle }));
   };
 
   if (!card) {
@@ -33,7 +45,9 @@ const CardModal = () => {
           <textarea
             className="list-title"
             style={{ height: "45px" }}
-            defaultValue={card.title}
+            value={cardTitle}
+            onChange={(e) => setCardTitle(e.target.value)}
+            onBlur={handleUpdateTitle}
           ></textarea>
           <p>
             in list <a className="link">Stuff to try (this is a list)</a>
@@ -119,6 +133,9 @@ const CardModal = () => {
                 <li className="not-implemented">Show Details</li>
               </ul>
               <ul className="modal-activity-list">
+                {card.comments.map((comment) => (
+                  <Comment key={comment.id} comment={comment} />
+                ))}
                 <li>
                   <div className="member-container">
                     <div className="card-member">TP</div>
@@ -133,9 +150,11 @@ const CardModal = () => {
                   </small>
                   <div className="comment">
                     <label>
-                      <textarea required="" rows="1">
-                        The activities have not been implemented yet.
-                      </textarea>
+                      <textarea
+                        required=""
+                        rows="1"
+                        defaultValue="The activities have not been implemented yet."
+                      ></textarea>
                       <div>
                         <a className="light-button card-icon sm-icon"></a>
                         <a className="light-button smiley-icon sm-icon"></a>
@@ -177,9 +196,11 @@ const CardModal = () => {
                   </small>
                   <div className="comment">
                     <label>
-                      <textarea required="" rows="1">
-                        Example of a comment.
-                      </textarea>
+                      <textarea
+                        required=""
+                        rows="1"
+                        defaultValue="Example of a comment."
+                      ></textarea>
                       <div>
                         <a className="light-button card-icon sm-icon"></a>
                         <a className="light-button smiley-icon sm-icon"></a>

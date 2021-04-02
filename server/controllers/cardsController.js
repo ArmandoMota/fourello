@@ -6,6 +6,7 @@ const getCard = (req, res, next) => {
   const cardId = req.params.id;
 
   Card.findById(cardId)
+    .populate("comments")
     .then((card) => {
       res.json({ card });
     })
@@ -50,7 +51,19 @@ const sendCard = (req, res, next) => {
   res.json({ card });
 };
 
+const updateCard = (req, res, next) => {
+  const cardUpdates = req.body.card;
+  const cardId = req.params.id;
+  Card.findByIdAndUpdate(cardId, cardUpdates, { new: true }).then(
+    (updatedCard) => {
+      req.card = updatedCard;
+      next();
+    }
+  );
+};
+
 exports.getCard = getCard;
 exports.createCard = createCard;
 exports.addCardToList = addCardToList;
 exports.sendCard = sendCard;
+exports.updateCard = updateCard;

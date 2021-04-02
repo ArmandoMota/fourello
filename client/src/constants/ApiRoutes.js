@@ -7,3 +7,4 @@ export const UPDATE_LIST_URL = "/api/lists";
 
 export const CREATE_CARD_URL = "/api/cards";
 export const FETCH_CARD_URL = "/api/cards";
+export const UPDATE_CARD_URL = "/api/cards";

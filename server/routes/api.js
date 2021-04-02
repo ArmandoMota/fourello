@@ -31,6 +31,9 @@ router.post(
   cardsController.sendCard
 );
 
+// Add validation middleware
+router.put("/cards/:id", cardsController.updateCard, cardsController.sendCard);
+
 router.post(
   "/comments",
   validateComment,

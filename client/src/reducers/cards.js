@@ -1,6 +1,6 @@
 import * as types from "../constants/ActionTypes";
 
-export default function lists(state = [], action) {
+export default function cards(state = [], action) {
   switch (action.type) {
     case types.FETCH_BOARD_SUCCESS:
       const [...updatedState] = state;
@@ -23,9 +23,28 @@ export default function lists(state = [], action) {
     case types.CREATE_CARD_SUCCESS:
       return [...state, action.card];
     case types.FETCH_CARD_SUCCESS:
-      const filteredCards = state.filter((card) => card.id !== action.card.id);
-      filteredCards.push(action.card);
-      return filteredCards;
+      const existingCardIndex = state.findIndex(
+        (card) => card.id === action.card.id
+      );
+
+      if (existingCardIndex === -1) {
+        return [...state, action.card];
+      } else {
+        const newState = [...state];
+        newState[existingCardIndex] = action.card;
+        return newState;
+      }
+    case types.UPDATE_CARD_SUCCESS:
+      console.log(action.card);
+      return state.map((card) => {
+        if (card.id !== action.card.id) {
+          return card;
+        }
+
+        const comments = card.comments;
+
+        return { ...action.card, comments };
+      });
     default:
       return state;
   }

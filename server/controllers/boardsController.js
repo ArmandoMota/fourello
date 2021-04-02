@@ -34,6 +34,9 @@ const getBoard = (req, res) => {
       path: "lists",
       populate: {
         path: "cards",
+        populate: {
+          path: "comments",
+        },
       },
     })
     .then((board) => {
