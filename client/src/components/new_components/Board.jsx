@@ -4,7 +4,6 @@ import List from "./List";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBoard } from "../../actions/BoardActions";
 import { createList } from "../../actions/ListActions";
-import Axios from "axios";
 
 const Board = () => {
   const dispatch = useDispatch();
@@ -13,19 +12,21 @@ const Board = () => {
   let id = useParams().id;
   let boardId;
 
+  const { url } = useRouteMatch();
+  if (url.includes("cards")) {
+    const card = cards.find((card) => card.id === id);
+    if (card) {
+      boardId = card.boardId;
+    }
+  } else {
+    boardId = id;
+  }
+
   useEffect(() => {
     if (boardId) {
       dispatch(fetchBoard(boardId));
     }
   }, [boardId, dispatch]);
-
-  const { url } = useRouteMatch();
-  if (url.includes("cards")) {
-    const card = cards.find((card) => card.id === id);
-    boardId = card.boardId;
-  } else {
-    boardId = id;
-  }
 
   const board = useSelector((state) =>
     state.boards.find((board) => board.id === boardId)

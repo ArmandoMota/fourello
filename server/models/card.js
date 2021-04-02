@@ -42,7 +42,8 @@ const CardSchema = new Schema(
     },
     comments: [
       {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
       },
     ],
     commentsCount: {

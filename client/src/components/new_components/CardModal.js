@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCard } from "../../actions/CardActions";
 
 const CardModal = () => {
   let cardId = useParams().id;
-  let card = useSelector(({ cards }) => cards.find(card => card.id === cardId));
+  let card = useSelector(({ cards }) =>
+    cards.find((card) => card.id === cardId)
+  );
   const dispatch = useDispatch();
   let history = useHistory();
-  console.log(card);
 
   useEffect(() => {
     dispatch(getCard(cardId));
@@ -29,9 +30,11 @@ const CardModal = () => {
         <i className="x-icon icon close-modal" onClick={handleHideCard}></i>
         <header>
           <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }}>
-            {card.title}
-          </textarea>
+          <textarea
+            className="list-title"
+            style={{ height: "45px" }}
+            defaultValue={card.title}
+          ></textarea>
           <p>
             in list <a className="link">Stuff to try (this is a list)</a>
             <i className="sub-icon sm-icon"></i>
@@ -43,12 +46,12 @@ const CardModal = () => {
               <ul className="modal-details-list">
                 <li className="labels-section">
                   <h3>Labels</h3>
-                  {card.labels.map(label => {
+                  {card.labels.map((label) => {
                     return (
                       <div key={label} className="member-container">
                         <div className={`${label} label colorblindable`}></div>
                       </div>
-                    )
+                    );
                   })}
                   <div className="member-container">
                     <i className="plus-icon sm-icon"></i>
@@ -155,8 +158,9 @@ const CardModal = () => {
                     <div className="card-member small-size">VR</div>
                   </div>
                   <p>
-                    <span className="member-name">Victor Reyes</span> changed the
-                    background of this board <small>yesterday at 4:53 PM</small>
+                    <span className="member-name">Victor Reyes</span> changed
+                    the background of this board{" "}
+                    <small>yesterday at 4:53 PM</small>
                   </p>
                 </li>
                 <li className="activity-comment">
